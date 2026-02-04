@@ -1,9 +1,14 @@
+import mysql from "mysql2/promise";
 import { drizzle } from "drizzle-orm/mysql2";
 
-export const db = drizzle(
-  {
-    connection: {
-      uri: process.env.DATABASE_URL
-    }
-  }
-);
+const pool = mysql.createPool({
+  uri: process.env.DATABASE_URL!,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+  // ssl: {
+  //   rejectUnauthorized: true,
+  // },
+});
+
+export const db = drizzle(pool);
