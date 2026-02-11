@@ -1,26 +1,25 @@
-import { ApiResponse } from "./Apiresponse";
+import { NextRequest, NextResponse } from "next/server";
+
+type AppRouteHandler<T> = (
+  req: NextRequest,
+  ctx: { params: Promise<T> }
+) => Promise<Response>;
 
 export const asyncHandler =
-  <Req extends Request>(
-    controller: (req: Req) => Promise<Response>
-  ) =>
-    async (req: Req): Promise<Response> => {
-      try {
-        return await controller(req);
-      } catch (err) {
-        console.log(err);
-        return Response.json(
-          new ApiResponse(
-            500,
-            "Something went wrong",
-            false,
-            { error: err instanceof Error ? err.message : err as string }
-          ).toString(),
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-      }
-    };
+  <T>(fn: AppRouteHandler<T>) =>
+  async (req: NextRequest, ctx: { params: Promise<T> }) => {
+    try {
+      return await fn(req, ctx);
+    } catch (error) {
+      console.error("API Error:", error);
+      return NextResponse.json(
+        {
+          statusCode: 500,
+          message: error instanceof Error ? error?.message : "Internal Server Error",
+          status: false,
+          data: null,
+        },
+        { status: 500 }
+      );
+    }
+  };

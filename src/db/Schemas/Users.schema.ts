@@ -1,5 +1,14 @@
 import { int, mysqlTable, varchar } from "drizzle-orm/mysql-core";
 
+export interface IUserSchema {
+  id?: number,
+  username: string,
+  full_name: string,
+  email: string,
+  password: string,
+  refresh_token: string | null
+}
+
 export const users = mysqlTable("users", {
   id: int("id")
     .primaryKey()
