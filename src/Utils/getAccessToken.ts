@@ -1,4 +1,4 @@
-import { IUserSchema } from "@/app/api/auth/signup/route";
+import { IUserSchema } from "@/db/Schemas/Users.schema";
 import * as jose from "jose";
 
 export const getAccessToken = async (user: IUserSchema) => {
@@ -9,8 +9,9 @@ export const getAccessToken = async (user: IUserSchema) => {
     email: user.email
   })
     .setProtectedHeader({ alg: "HS256" })
+    .setSubject(user.id!.toString())
     .setExpirationTime("1h")
     .sign(access_secret);
+  
   return access_token;
 }
-

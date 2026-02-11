@@ -1,5 +1,14 @@
-import { int, mysqlTable, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { date, int, mysqlTable, varchar } from "drizzle-orm/mysql-core";
 import { users } from "./Users.schema";
+
+export interface ITasks {
+  id?: number;
+  title: string;
+  body: string;
+  user_id: number;
+  status: string;
+  due_date: Date;
+}
 
 export const tasks = mysqlTable('tasks', {
   id: int("id")
@@ -16,7 +25,7 @@ export const tasks = mysqlTable('tasks', {
   status: varchar("status", { length: 1 })
     .notNull()
     .default("P"),
-  due_date: timestamp("due_date")
+  due_date: date("date")
     .notNull()
 
   // these are good to have but they are not necessary here

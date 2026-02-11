@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { users } from "@/db/Schemas/Users.schema";
+import { IUserSchema, users } from "@/db/Schemas/Users.schema";
 import { ApiResponse } from "@/Utils/Apiresponse";
 import { asyncHandler } from "@/Utils/asyncHandler";
 import { hashPassword } from "@/Utils/hashPassword";
@@ -11,15 +11,6 @@ export interface ISignUpBody {
   username: string;
   email: string;
   password: string;
-}
-
-export interface IUserSchema {
-  id?: number,
-  username: string,
-  full_name: string,
-  email: string,
-  password: string,
-  refresh_token: string | null
 }
 
 export const POST = asyncHandler(async (request: NextRequest) => {
