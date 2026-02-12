@@ -1,4 +1,4 @@
-import { IUserSchema } from "@/app/api/auth/signup/route";
+import { IUserSchema } from "@/db/Schemas/Users.schema";
 import * as jose from "jose";
 
 export const getRefreshToken = async (user: IUserSchema) => {

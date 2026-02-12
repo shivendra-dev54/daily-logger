@@ -1,5 +1,6 @@
 import { db } from "@/db";
 import { summaries } from "@/db/Schemas/Summaries.schema";
+import { decrypt, encrypt } from "@/lib/encryption";
 import { getAuthUser } from "@/lib/get-auth-user";
 import { ApiResponse } from "@/Utils/Apiresponse";
 import { asyncHandler } from "@/Utils/asyncHandler";
@@ -69,7 +70,7 @@ export const POST = asyncHandler(async (request: NextRequest) => {
   }
 
   await db.insert(summaries).values({
-    summary: summary.trim(),
+    summary: encrypt(summary.trim()),
     rating: parsedRating,
     user_id: user.id,
     date: formatted_date,
@@ -98,6 +99,10 @@ export const GET = asyncHandler(async (request: NextRequest) => {
     .from(summaries)
     .where(eq(summaries.user_id, user.id))
     .orderBy(desc(summaries.date));
+
+  userLogs.map((log) => {
+    log.summary = decrypt(log.summary)
+  })
 
   return NextResponse.json(
     new ApiResponse(
