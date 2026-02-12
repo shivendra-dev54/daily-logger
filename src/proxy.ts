@@ -1,6 +1,6 @@
-import { NextResponse, NextRequest } from 'next/server'
-import { jwtVerify } from 'jose'
-import { ApiResponse } from './Utils/Apiresponse'
+import { NextResponse, NextRequest } from 'next/server';
+import { jwtVerify } from 'jose';
+import { ApiResponse } from './Utils/Apiresponse';
 
 export async function proxy(request: NextRequest) {
   const accessToken = request.cookies.get('access_token')?.value
@@ -68,5 +68,11 @@ export const config = {
     '/api/sleep/:path*',
 
     '/api/day-rating',
+
+    '/api/admin',
+    '/api/admin/:path',
+
+    '/api/user',
+    '/api/user/:path',
   ],
 }

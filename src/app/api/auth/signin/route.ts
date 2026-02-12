@@ -1,10 +1,9 @@
 import { db } from "@/db";
-import { users } from "@/db/Schemas/Users.schema";
+import { IUserSchema, users } from "@/db/Schemas/Users.schema";
 import { ApiResponse } from "@/Utils/Apiresponse";
 import { asyncHandler } from "@/Utils/asyncHandler";
 import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
-import { IUserSchema } from "../signup/route";
 import { getRefreshToken } from "@/Utils/getRefreshToken";
 import { getAccessToken } from "@/Utils/getAccessToken";
 import { verifyPassword } from "@/Utils/verifyPassword";

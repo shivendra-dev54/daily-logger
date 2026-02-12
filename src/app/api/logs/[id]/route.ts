@@ -1,5 +1,6 @@
 import { db } from "@/db";
 import { summaries } from "@/db/Schemas/Summaries.schema";
+import { decrypt, encrypt } from "@/lib/encryption";
 import { getAuthUser } from "@/lib/get-auth-user";
 import { ApiResponse } from "@/Utils/Apiresponse";
 import { asyncHandler } from "@/Utils/asyncHandler";
@@ -40,7 +41,10 @@ export const GET = asyncHandler(
     }
 
     return NextResponse.json(
-      new ApiResponse(200, "Log fetched", true, log).toString(),
+      new ApiResponse(200, "Log fetched", true, {
+        ...log,
+        summary: decrypt(log.summary),
+      }).toString(),
       { status: 200 }
     );
   }
@@ -115,7 +119,7 @@ export const PATCH = asyncHandler(
         );
       }
 
-      updateData.summary = trimmed;
+      updateData.summary = encrypt(trimmed);
     }
 
     if (body.rating !== undefined) {
