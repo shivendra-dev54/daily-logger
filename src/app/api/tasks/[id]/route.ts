@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { ITasks, tasks } from "@/db/Schemas/Tasks.schema";
+import { tasks } from "@/db/Schemas/Tasks.schema";
 import { getAuthUser } from "@/lib/get-auth-user";
 import { ApiResponse } from "@/Utils/Apiresponse";
 import { asyncHandler } from "@/Utils/asyncHandler";
@@ -102,11 +102,11 @@ export const PATCH = asyncHandler(
       );
     }
 
-    const updateData: Partial<ITasks> = {
+    const updateData = {
       title: "",
       body: "",
       status: "",
-      due_date: new Date()
+      due_date: ""
     };
 
     if (updates.title !== undefined) {
@@ -132,7 +132,7 @@ export const PATCH = asyncHandler(
         );
       }
 
-      updateData.due_date = dueDate;
+      updateData.due_date = dueDate.toDateString();
     }
 
     await db

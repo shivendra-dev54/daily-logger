@@ -54,7 +54,7 @@ export const POST = asyncHandler(async (request: NextRequest) => {
     .from(summaries)
     .where(and(
       eq(summaries.user_id, user.id),
-      eq(summaries.date, formatted_date)
+      eq(summaries.date, formatted_date.toDateString())
     ))
 
   if (existing_log) {
@@ -73,7 +73,7 @@ export const POST = asyncHandler(async (request: NextRequest) => {
     summary: encrypt(summary.trim()),
     rating: parsedRating,
     user_id: user.id,
-    date: formatted_date,
+    date: formatted_date.toDateString(),
   });
 
   return NextResponse.json(

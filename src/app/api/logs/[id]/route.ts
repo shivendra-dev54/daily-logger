@@ -184,9 +184,10 @@ export const DELETE = asyncHandler(
 
     const result = await db
       .delete(summaries)
-      .where(and(eq(summaries.id, logId), eq(summaries.user_id, user.id)));
+      .where(and(eq(summaries.id, logId), eq(summaries.user_id, user.id)))
+      .returning();
 
-    if (!result[0]?.affectedRows) {
+    if (!result[0]) {
       return NextResponse.json(
         new ApiResponse(404, "Log not found", false, null).toString(),
         { status: 404 }
