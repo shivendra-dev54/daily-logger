@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { ITasks, tasks } from "@/db/Schemas/Tasks.schema";
+import { tasks } from "@/db/Schemas/Tasks.schema";
 import { getAuthUser } from "@/lib/get-auth-user";
 import { ApiResponse } from "@/Utils/Apiresponse";
 import { asyncHandler } from "@/Utils/asyncHandler";
@@ -60,12 +60,12 @@ export const POST = asyncHandler(async (request: NextRequest) => {
     );
   }
 
-  const task: ITasks = {
+  const task = {
     title,
     body,
     user_id: user.id,
     status: "P",
-    due_date: dueDate
+    due_date: dueDate.toDateString()
   }
 
   await db
