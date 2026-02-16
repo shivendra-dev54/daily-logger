@@ -1,4 +1,4 @@
-import { int, mysqlTable, varchar } from "drizzle-orm/mysql-core";
+import { pgTable, serial, varchar } from "drizzle-orm/pg-core";
 
 export interface IUserSchema {
   id?: number,
@@ -9,10 +9,8 @@ export interface IUserSchema {
   refresh_token: string | null
 }
 
-export const users = mysqlTable("users", {
-  id: int("id")
-    .primaryKey()
-    .autoincrement(),
+export const users = pgTable("users", {
+  id: serial("id").primaryKey(),
 
   username: varchar("username", { length: 30 })
     .notNull()
@@ -31,7 +29,4 @@ export const users = mysqlTable("users", {
   refresh_token: varchar("refresh_token", { length: 500 })
     .default("")
 
-  // these are good to have but they are not necessary here
-  // created_at: timestamp("created_at").defaultNow(),
-  // updated_at: timestamp("updated_at").defaultNow()
 });

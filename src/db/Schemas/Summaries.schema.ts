@@ -1,10 +1,11 @@
 import {
   date,
-  int,
-  mysqlTable,
+  integer,
+  pgTable,
+  serial,
   uniqueIndex,
   varchar,
-} from "drizzle-orm/mysql-core";
+} from "drizzle-orm/pg-core";
 import { users } from "./Users.schema";
 
 export interface ISummaries {
@@ -15,18 +16,18 @@ export interface ISummaries {
   date: Date;
 }
 
-export const summaries = mysqlTable(
+export const summaries = pgTable(
   "summaries",
   {
-    id: int("id").primaryKey().notNull().autoincrement(),
+    id: serial("id").primaryKey(),
 
-    user_id: int("user_id")
+    user_id: integer("user_id")
       .notNull()
       .references(() => users.id),
 
     summary: varchar("summary", { length: 1000 }).notNull(),
 
-    rating: int("rating").notNull().default(2),
+    rating: integer("rating").notNull().default(2),
 
     date: date("date").notNull(),
   },

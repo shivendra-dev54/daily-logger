@@ -1,4 +1,4 @@
-import { date, int, mysqlTable, varchar } from "drizzle-orm/mysql-core";
+import { date, integer, pgTable, serial, varchar } from "drizzle-orm/pg-core";
 import { users } from "./Users.schema";
 
 export interface ITasks {
@@ -10,16 +10,13 @@ export interface ITasks {
   due_date: Date;
 }
 
-export const tasks = mysqlTable('tasks', {
-  id: int("id")
-    .primaryKey()
-    .notNull()
-    .autoincrement(),
+export const tasks = pgTable('tasks', {
+  id: serial("id").primaryKey(),
   title: varchar("title", { length: 100 })
     .notNull(),
   body: varchar("body", { length: 500 })
     .notNull(),
-  user_id: int("user_id")
+  user_id: integer("user_id")
     .notNull()
     .references(() => users.id),
   status: varchar("status", { length: 1 })
@@ -27,8 +24,4 @@ export const tasks = mysqlTable('tasks', {
     .default("P"),
   due_date: date("date")
     .notNull()
-
-  // these are good to have but they are not necessary here
-  // created_at: timestamp("created_at").defaultNow(),
-  // updated_at: timestamp("updated_at").defaultNow()
 });

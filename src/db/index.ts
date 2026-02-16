@@ -1,14 +1,6 @@
-import mysql from "mysql2/promise";
-import { drizzle } from "drizzle-orm/mysql2";
+import { drizzle } from 'drizzle-orm/postgres-js';
+import postgres from 'postgres';
 
-const pool = mysql.createPool({
-  uri: process.env.DATABASE_URL!,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-});
+const client = postgres(process.env.DATABASE_URL!, { prepare: false });
 
-export const db = drizzle(pool);
+export const db = drizzle(client);
