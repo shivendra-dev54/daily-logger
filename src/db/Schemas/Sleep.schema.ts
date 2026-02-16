@@ -1,4 +1,4 @@
-import { datetime, int, mysqlTable } from "drizzle-orm/mysql-core";
+import { integer, pgTable, serial, timestamp } from "drizzle-orm/pg-core";
 import { users } from "./Users.schema";
 
 export interface ISleep {
@@ -8,11 +8,11 @@ export interface ISleep {
   end_time: string;
 }
 
-export const sleep = mysqlTable("sleep", {
-  id: int("id").primaryKey().notNull().autoincrement(),
-  user_id: int("user_id")
+export const sleep = pgTable("sleep", {
+  id: serial("id").primaryKey(),
+  user_id: integer("user_id")
     .notNull()
     .references(() => users.id),
-  start_time: datetime("start_time").notNull(),
-  end_time: datetime("end_time").notNull(),
+  start_time: timestamp("start_time").notNull(),
+  end_time: timestamp("end_time").notNull(),
 });
