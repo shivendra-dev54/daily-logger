@@ -77,7 +77,7 @@ Daily Logger is a holistic productivity and wellness tracking application design
 | --- | --- |
 | **Next.js API Routes** | Serverless backend endpoints. |
 | **Drizzle ORM** | Type-safe SQL ORM. |
-| **MySQL** | Relational database (PlanetScale / Local MySQL). |
+| **PostgreSQL** | Relational database (Neon / Supabase / Local PostgreSQL). |
 | **Jose / Bcrypt** | JWT handling and password hashing. |
 
 ---
@@ -90,7 +90,7 @@ Follow these steps to set up the project locally.
 
 * Node.js (v18 or higher)
 * npm or yarn
-* MySQL Database
+* **PostgreSQL Database**
 
 ### Installation
 
@@ -110,12 +110,12 @@ npm install
 
 
 3. **Set up the Database**
-* Ensure your MySQL server is running.
+* Ensure your PostgreSql server is running.
 * Run Drizzle migrations (if applicable) or push schema:
 
 
 ```bash
-npx drizzle-kit push:mysql
+npx drizzle-kit push:pg
 
 ```
 
@@ -141,7 +141,7 @@ npm run dev
 Create a `.env` file and add the following keys:
 
 ```env
-DATABASE_URL=mysql://
+DATABASE_URL=postgresql://
 
 ACCESS_SECRET=
 REFRESH_SECRET=

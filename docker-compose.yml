@@ -1,14 +1,13 @@
 services:
   db:
-    image: mysql:8.4
-    container_name: mysql-db
+    image: postgres:16-alpine
+    container_name: postgres-db
     restart: always
     ports:
-      - "3306:3306"
+      - "5432:5432"
     environment:
-      MYSQL_USER: test_user
-      MYSQL_PASSWORD: test_pass
-      MYSQL_DATABASE: test_db
-      MYSQL_ROOT_PASSWORD: root_pass
+      POSTGRES_USER: test_user
+      POSTGRES_PASSWORD: test_pass
+      POSTGRES_DB: test_db
     volumes:
-      - ./data:/var/lib/mysql
+      - ./postgres_data:/var/lib/postgresql/data
